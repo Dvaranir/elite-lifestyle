@@ -1,0 +1,9 @@
+.directory {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 2rem;
+  overflow: hidden;
+  grid-template-rows: 1fr;
+}

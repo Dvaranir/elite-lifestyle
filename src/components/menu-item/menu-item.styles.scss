@@ -1,0 +1,44 @@
+@import '../../settings.styles.scss';
+
+.menu--item {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    & .background--image {
+      transform: scale(1.5);
+      transition: transform 7s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+    }
+  }
+
+  .background--image {
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+  }
+
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $SecondaryColor;
+    background-color: $MainColor;
+    position: absolute;
+    padding: 0.3em 0.5em;
+    border-radius: 0.5em;
+    font-size: 1.7rem;
+
+    &:hover {
+      cursor: pointer;
+      color: $MainColor;
+      background-color: $SecondaryColor;
+      border: 1px solid $MainColor;
+    }
+  }
+}
