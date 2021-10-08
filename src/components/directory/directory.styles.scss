@@ -1,9 +1,15 @@
 .directory {
-  display: grid;
+  display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   gap: 2rem;
-  overflow: hidden;
-  grid-template-rows: 1fr;
+  max-width: 192rem;
+  max-height: 72rem;
+}
+
+@media only screen and (max-width: 972px) {
+  .directory {
+    flex-direction: column;
+  }
 }
