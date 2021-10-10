@@ -1,11 +1,10 @@
 .directory {
   display: flex;
-  justify-content: center;
+  justify-items: space-between;
   align-items: center;
   text-align: center;
-  gap: 2rem;
-  max-width: 192rem;
-  max-height: 72rem;
+
+  width: 100%;
 }
 
 @media only screen and (max-width: 972px) {

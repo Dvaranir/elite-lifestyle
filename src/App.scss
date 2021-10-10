@@ -11,12 +11,20 @@ html {
   background-color: $MainColor;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:visited {
+  color: $MainColor;
+}
+
 .App {
   width: 99vw;
   height: 99vh;
   margin: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 }

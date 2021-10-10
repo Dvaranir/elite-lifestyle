@@ -1,0 +1,18 @@
+@import '../../settings.styles.scss';
+
+.footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2rem;
+  color: $SecondaryColor;
+  margin-bottom: 1rem;
+}
+
+@media only screen and (max-width: 972px) {
+  .footer {
+    width: 90%;
+    font-size: 1.5rem;
+  }
+}
