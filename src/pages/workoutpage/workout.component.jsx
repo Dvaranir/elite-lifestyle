@@ -1,5 +1,8 @@
 import React from 'react';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../../state/index';
+import { useEffect } from 'react';
 import SearchBar from '../../components/search/search.component';
 import Calendar from '../../components/calendar/calendar.component';
 import ExerciseCard from '../../components/exercise_card.component/exercise_card.component';
@@ -26,30 +29,42 @@ const addRemoveExercise = (e, exercises, userExercises, setUserExercises) => {
   );
 
   if (checkForDublicates(id_exercise_to_add, exercises, userExercises)) {
-    setUserExercises(old =>
-      old.filter(ex => !ex.id.includes(id_exercise_to_add))
+    setUserExercises(
+      userExercises.filter(ex => !ex.id.includes(id_exercise_to_add))
     );
   } else {
-    setUserExercises(old => [...old, ...clicked_exercise]);
+    setUserExercises([...userExercises, ...clicked_exercise]);
   }
 };
 
-const WorkoutPage = ({
-  date,
-  setDate,
-  search,
-  setSearch,
-  exercises,
-  userExercises,
-  setUserExercises,
-}) => {
+const WorkoutPage = () => {
+  const dispatch = useDispatch();
+  const { setDate, setSearch, fetchExercises, setUserExercises } =
+    bindActionCreators(actionCreators, dispatch);
+
+  const { date, search, exercises, userExercises } = useSelector(
+    state => state
+  );
+
+  useEffect(() => {
+    try {
+      dispatch(fetchExercises());
+      console.log(exercises);
+    } catch (error) {}
+  }, []);
+
   const filterExercise = (exercises, filter) => {
-    const filteredResult = exercises.filter(
-      el =>
-        el.exercise_name.toLowerCase().includes(filter.toLowerCase()) ||
-        el.body_part.toLowerCase().includes(filter.toLowerCase()) ||
-        el.equipment_type.toLowerCase().includes(filter.toLowerCase())
-    );
+    const filteredResult = exercises.filter(el => {
+      try {
+        return (
+          el.exercise_name.toLowerCase().includes(filter.toLowerCase()) ||
+          el.body_part.toLowerCase().includes(filter.toLowerCase()) ||
+          el.equipment_type.toLowerCase().includes(filter.toLowerCase())
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    });
 
     return filteredResult;
   };
