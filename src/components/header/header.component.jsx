@@ -4,13 +4,17 @@ import { Link } from 'react-router-dom';
 
 import './header.styles.scss';
 
-const Header = () => (
+const Header = props => (
   <div className="header">
-    <div className="logo">Elite Lifestyle</div>
+    <Link to="/">
+      <div className="logo">Elite Lifestyle</div>
+    </Link>
     <nav className="nav--bar">
-      <Link>Workout</Link>
-      <Link>Food</Link>
-      <Link>Financies</Link>
+      {Object.values(props).map(item => (
+        <Link key={item.id} to={`/${item.url}`}>
+          {item.url[0].toUpperCase() + item.url.slice(1)}
+        </Link>
+      ))}
     </nav>
   </div>
 );

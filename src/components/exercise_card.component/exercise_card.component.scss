@@ -1,0 +1,51 @@
+@import '../../settings.styles.scss';
+
+.exercise--card {
+  color: white;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  .image--container {
+    width: 10rem;
+    height: 10rem;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 10rem;
+    }
+  }
+
+  .exercise--description {
+    font-size: 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+}
+
+.btn {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  width: 3rem;
+  color: $SecondaryColor;
+
+  .btn__component {
+    border: 0.2rem solid $SecondaryColor;
+    border-radius: 50%;
+    stroke-width: 1rem;
+    width: 100%;
+    height: auto;
+    @include hover-and-click($MainColor, $AdjacentColor, $SecondaryColor);
+  }
+
+  #btn__remove {
+    @include hover-and-click($MainColor, $SecondAdjacentColor, $SecondaryColor);
+  }
+}
