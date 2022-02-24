@@ -6,17 +6,24 @@ const getDaysInMonth = (year, month) => {
   return new Date(year, month, 0).getDate();
 };
 
-const getDateObject = date => {
+function getDateObject(date) {
+  let day = date.getDate();
+  let month = date.getMonth();
+  let year = date.getFullYear();
+  let month_name = date.toLocaleString('en-US', { month: 'long' });
+
   const date_obj = {
-    day: date.getDate(),
-    month: date.getMonth(),
-    month_name: date.toLocaleString('en-US', { month: 'long' }),
-    year: date.getFullYear(),
-    days_in_month: getDaysInMonth(date.getFullYear(), date.getMonth() + 1),
+    day: day,
+    month: month,
+    year: year,
+    full_date: [year, month, day],
+    month_name: month_name,
+    days_in_month: getDaysInMonth(year, month + 1),
+    exercises: [],
   };
 
   return date_obj;
-};
+}
 
 const changeDate = (day, month, year) => {
   return getDateObject(new Date(year, month, day));
@@ -53,7 +60,7 @@ const Calendar = ({ date, setDate }) => {
     setDate(date_object);
   }, []);
 
-  let { day, month, year } = date;
+  let { day, month, year, month_name, days_in_month } = date;
 
   return (
     <section className="calendar--section">
@@ -69,13 +76,13 @@ const Calendar = ({ date, setDate }) => {
           <IoIosArrowBack className="month--btn__component" />
         </button>
         <div className="date--container">
-          <div className="month">{date.month_name}</div>
-          <div className="year">{date.year}</div>
+          <div className="month">{month_name}</div>
+          <div className="year">{year}</div>
         </div>
         <button
           onClick={() => {
             setDate({
-              ...nextMonth(date['day'], date['month'], date['year']),
+              ...nextMonth(day, month, year),
             });
           }}
           className="month--btn next--month__btn"
@@ -83,9 +90,7 @@ const Calendar = ({ date, setDate }) => {
           <IoIosArrowForward className="month--btn__component" />
         </button>
       </div>
-      <div className="days--container">
-        {genDaysInMonth(date.days_in_month)}
-      </div>
+      <div className="days--container">{genDaysInMonth(days_in_month)}</div>
     </section>
   );
 };

@@ -7,9 +7,11 @@ import './directory.styles.scss';
 const Directory = props => {
   return (
     <div className="directory">
-      {Object.values(props).map(item => {
-        return <MenuItem key={item.id} {...item} />;
-      })}
+      {Object.values(props)
+        .filter(item => item.imageUrl)
+        .map(item => {
+          return <MenuItem key={item.id} {...item} />;
+        })}
     </div>
   );
 };

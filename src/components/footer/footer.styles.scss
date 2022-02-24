@@ -4,10 +4,11 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+
   align-items: center;
+  justify-items: center;
   font-size: 2rem;
   color: $SecondaryColor;
-  margin-bottom: 1rem;
 }
 
 @media only screen and (max-width: 972px) {

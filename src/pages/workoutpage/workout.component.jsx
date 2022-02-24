@@ -5,7 +5,7 @@ import { actionCreators } from '../../state/index';
 import { useEffect } from 'react';
 import SearchBar from '../../components/search/search.component';
 import Calendar from '../../components/calendar/calendar.component';
-import ExerciseCard from '../../components/exercise_card.component/exercise_card.component';
+import ExerciseCard from '../../components/exercise_card/exercise_card.component';
 import './workout.styles.scss';
 
 const checkForDublicates = (id, exercises, userExercises) => {

@@ -5,8 +5,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  justify-self: initial;
-  margin-top: 1rem;
+  justify-items: center;
 }
 
 .logo {
@@ -19,7 +18,7 @@
   display: flex;
   gap: 1rem;
 
-  a {
+  > * {
     background-color: $SecondaryColor;
     border-radius: 0.1em;
     padding: 0.1em 0.2em;
