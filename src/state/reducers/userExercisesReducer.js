@@ -1,6 +1,6 @@
 const reducer = (state = [], action) => {
   switch (action.type) {
-    case 'setUserExercises':
+    case "setUserExercises":
       return (state = [...action.payload]);
 
     default:

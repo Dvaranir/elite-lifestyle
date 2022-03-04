@@ -1,4 +1,4 @@
-@import '../../settings.styles.scss';
+@import "../../settings.styles.scss";
 
 .workout--section {
   display: flex;
@@ -76,6 +76,9 @@
     font-size: 3rem;
 
     @include hover-and-click($MainColor, $SecondaryColor, $AdjacentColor);
+  }
+  .current--day {
+    background-color: $SecondAdjacentColor;
   }
 }
 

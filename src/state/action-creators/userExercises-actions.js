@@ -1,7 +1,7 @@
-export const setUserExercises = newState => {
-  return dispatch => {
+export const setUserExercises = (newState) => {
+  return (dispatch) => {
     dispatch({
-      type: 'setUserExercises',
+      type: "setUserExercises",
       payload: newState,
     });
   };

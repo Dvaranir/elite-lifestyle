@@ -1,6 +1,6 @@
 const reducer = (state = [], action) => {
   switch (action.type) {
-    case 'setDate':
+    case "setDate":
       return (state = action.payload);
 
     default:

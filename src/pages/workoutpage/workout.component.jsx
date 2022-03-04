@@ -1,60 +1,73 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { actionCreators } from '../../state/index';
-import { useEffect } from 'react';
-import SearchBar from '../../components/search/search.component';
-import Calendar from '../../components/calendar/calendar.component';
-import ExerciseCard from '../../components/exercise_card/exercise_card.component';
-import './workout.styles.scss';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../state/index";
+import { useEffect } from "react";
+import SearchBar from "../../components/search/search.component";
+import Calendar from "../../components/calendar/calendar.component";
+import ExerciseCard from "../../components/exercise_card/exercise_card.component";
+import "./workout.styles.scss";
 
 const checkForDublicates = (id, exercises, userExercises) => {
-  const clicked_exercise = exercises.filter(ex => ex.id.includes(id));
-  const check_for_dublicates = userExercises.filter(ex => ex.id.includes(id));
+  const clicked_exercise = exercises.filter((ex) => ex.id.includes(id));
+  const check_for_dublicates = userExercises.filter((ex) => ex.id.includes(id));
 
   return clicked_exercise[0] === check_for_dublicates[0];
 };
 
-const addRemoveExercise = (e, exercises, userExercises, setUserExercises) => {
+const addRemoveExercise = (
+  e,
+  exercises,
+  userExercises,
+  setUserExercises,
+  date
+) => {
   if (
-    e.target.classList.value !== 'btn__component' &&
-    e.target.parentElement.classList.value !== 'btn__component'
+    e.target.classList.value !== "btn__component" &&
+    e.target.parentElement.classList.value !== "btn__component"
   )
     return false;
 
-  const id_exercise_to_add = e.target.closest('.exercise--card').id;
+  const id_exercise_to_add = e.target.closest(".exercise--card").id;
 
-  const clicked_exercise = exercises.filter(ex =>
+  const clicked_exercise = exercises.filter((ex) =>
     ex.id.includes(id_exercise_to_add)
   );
 
   if (checkForDublicates(id_exercise_to_add, exercises, userExercises)) {
-    setUserExercises(
-      userExercises.filter(ex => !ex.id.includes(id_exercise_to_add))
-    );
+    setUserExercises([
+      ...new Set(
+        userExercises.filter((exercise) => exercise !== clicked_exercise[0])
+      ),
+    ]);
   } else {
-    setUserExercises([...userExercises, ...clicked_exercise]);
+    const userExersisesList = [
+      ...new Set([...userExercises, ...clicked_exercise]),
+    ];
+
+    setUserExercises(userExersisesList);
   }
 };
 
 const WorkoutPage = () => {
   const dispatch = useDispatch();
-  const { setDate, setSearch, fetchExercises, setUserExercises } =
-    bindActionCreators(actionCreators, dispatch);
+  const { setSearch, fetchExercises, setUserExercises } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
 
   const { date, search, exercises, userExercises } = useSelector(
-    state => state
+    (state) => state
   );
 
   useEffect(() => {
     try {
       dispatch(fetchExercises());
-      console.log(exercises);
     } catch (error) {}
   }, []);
 
   const filterExercise = (exercises, filter) => {
-    const filteredResult = exercises.filter(el => {
+    const filteredResult = exercises.filter((el) => {
       try {
         return (
           el.exercise_name.toLowerCase().includes(filter.toLowerCase()) ||
@@ -76,12 +89,18 @@ const WorkoutPage = () => {
       <section className="workout--section">
         <section
           className="user--exercises"
-          onClick={e =>
-            addRemoveExercise(e, exercises, userExercises, setUserExercises)
+          onClick={(e) =>
+            addRemoveExercise(
+              e,
+              exercises,
+              userExercises,
+              setUserExercises,
+              date
+            )
           }
         >
           {userExercises[0] ? (
-            userExercises.map(exercise => {
+            userExercises.map((exercise) => {
               return (
                 <ExerciseCard
                   key={exercise.id}
@@ -97,35 +116,37 @@ const WorkoutPage = () => {
           )}
         </section>
 
-        <Calendar date={{ ...date }} setDate={setDate} />
+        <Calendar />
 
         <section className="calendar--search__container">
           <section className="exercise--search__section">
             <SearchBar placeholder="Search" setSearch={setSearch} />
             <div
               className="exercise--cards"
-              onClick={e => {
+              onClick={(e) => {
                 try {
                   addRemoveExercise(
                     e,
                     exercises,
                     userExercises,
-                    setUserExercises
+                    setUserExercises,
+                    date
                   );
                 } catch (error) {
                   console.log(error);
                 }
               }}
             >
-              {filteredExercises.map(exercise => {
+              {/* Add exersice to user exercises list */}
+              {filteredExercises.map((exercise) => {
                 return (
                   <ExerciseCard
                     key={exercise.id}
                     exercise={exercise}
                     btnName={`${
                       checkForDublicates(exercise.id, exercises, userExercises)
-                        ? 'IoIosClose'
-                        : 'IoIosAdd'
+                        ? "IoIosClose"
+                        : "IoIosAdd"
                     }`}
                   />
                 );

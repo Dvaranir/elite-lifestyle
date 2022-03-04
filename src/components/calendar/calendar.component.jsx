@@ -1,6 +1,10 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../state/index";
+import { useEffect, componentDidUpdate } from "react";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import Days from "../days/days.component";
 
 const getDaysInMonth = (year, month) => {
   return new Date(year, month, 0).getDate();
@@ -10,7 +14,7 @@ function getDateObject(date) {
   let day = date.getDate();
   let month = date.getMonth();
   let year = date.getFullYear();
-  let month_name = date.toLocaleString('en-US', { month: 'long' });
+  let month_name = date.toLocaleString("en-US", { month: "long" });
 
   const date_obj = {
     day: day,
@@ -19,43 +23,35 @@ function getDateObject(date) {
     full_date: [year, month, day],
     month_name: month_name,
     days_in_month: getDaysInMonth(year, month + 1),
-    exercises: [],
+    userExercises: [],
   };
 
   return date_obj;
 }
 
-const changeDate = (day, month, year) => {
+const changeDate = (year, month, day) => {
   return getDateObject(new Date(year, month, day));
 };
 
-const prevMonth = (day, month, year) => {
-  return changeDate(day, Number(month) - 1, year);
+const prevMonth = (year, month, day) => {
+  return changeDate(year, Number(month) - 1, day);
 };
 
-const nextMonth = (day, month, year) => {
-  return changeDate(day, Number(month) + 1, year);
-};
-
-const genDaysInMonth = numberOfDays => {
-  let i = 0;
-
-  let days_buffer = [];
-  while (i < numberOfDays) {
-    i++;
-
-    days_buffer.push(
-      <div key={i + 'day'} className={`day text--selection__none ${i}`}>
-        {i.toString().padStart(2, '0')}
-      </div>
-    );
-  }
-  return <>{days_buffer}</>;
+const nextMonth = (year, month, day) => {
+  return changeDate(year, Number(month) + 1, day);
 };
 
 const date_object = getDateObject(new Date());
 
-const Calendar = ({ date, setDate }) => {
+const Calendar = () => {
+  const dispatch = useDispatch();
+  const { setDate, setUserExercises } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
+
+  const { date } = useSelector((state) => state);
+
   useEffect(() => {
     setDate(date_object);
   }, []);
@@ -68,7 +64,7 @@ const Calendar = ({ date, setDate }) => {
         <button
           onClick={() => {
             setDate({
-              ...prevMonth(day, month, year),
+              ...prevMonth(year, month, day),
             });
           }}
           className="month--btn prev--month__btn"
@@ -82,7 +78,7 @@ const Calendar = ({ date, setDate }) => {
         <button
           onClick={() => {
             setDate({
-              ...nextMonth(day, month, year),
+              ...nextMonth(year, month, day),
             });
           }}
           className="month--btn next--month__btn"
@@ -90,7 +86,7 @@ const Calendar = ({ date, setDate }) => {
           <IoIosArrowForward className="month--btn__component" />
         </button>
       </div>
-      <div className="days--container">{genDaysInMonth(days_in_month)}</div>
+      <Days getDateObject={getDateObject} />
     </section>
   );
 };

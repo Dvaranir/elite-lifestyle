@@ -1,7 +1,7 @@
-export const setDate = newState => {
-  return dispatch => {
+export const setDate = (newState) => {
+  return (dispatch) => {
     dispatch({
-      type: 'setDate',
+      type: "setDate",
       payload: newState,
     });
   };
