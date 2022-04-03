@@ -1,12 +1,12 @@
-import React from 'react';
-import { IoIosAdd, IoIosClose } from 'react-icons/io';
-import './exercise_card.component.scss';
+import React from "react";
+import { IoIosAdd, IoIosClose } from "react-icons/io";
+import "./exercise_card.component.scss";
 
-const iconSwitcher = iconName => {
+const iconSwitcher = (iconName) => {
   switch (iconName) {
-    case 'IoIosClose':
+    case "IoIosClose":
       return <IoIosClose className="btn__component" id="btn__remove" />;
-    case 'IoIosAdd':
+    case "IoIosAdd":
       return <IoIosAdd className="btn__component" />;
 
     default:
@@ -20,17 +20,17 @@ const ExerciseCard = ({ exercise, btnName }) => {
       <div className="image--container">
         <img
           src={
-            exercise['images_url_bbc']
-              .replace('{', '')
-              .replace('}', '')
-              .split(',')[0]
+            exercise["images_url_bbc"]
+              .replace("{", "")
+              .replace("}", "")
+              .split(",")[0]
           }
           alt="Exercise"
         />
       </div>
       <div className="exercise--description">
-        <p className="exercise--name">{exercise['exercise_name']}</p>
-        <p className="body--part">{exercise['body_part']}</p>
+        <p className="exercise--name">{exercise["exercise_name"]}</p>
+        <p className="body--part">{exercise["body_part"]}</p>
       </div>
       <button className="btn">{iconSwitcher(btnName)}</button>
     </div>

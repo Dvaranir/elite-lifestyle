@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state/index";
-import { useEffect, componentDidUpdate } from "react";
+import { useEffect } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import Days from "../days/days.component";
 
@@ -45,10 +45,7 @@ const date_object = getDateObject(new Date());
 
 const Calendar = () => {
   const dispatch = useDispatch();
-  const { setDate, setUserExercises } = bindActionCreators(
-    actionCreators,
-    dispatch
-  );
+  const { setDate } = bindActionCreators(actionCreators, dispatch);
 
   const { date } = useSelector((state) => state);
 
@@ -56,7 +53,7 @@ const Calendar = () => {
     setDate(date_object);
   }, []);
 
-  let { day, month, year, month_name, days_in_month } = date;
+  let { day, month, year, month_name } = date;
 
   return (
     <section className="calendar--section">

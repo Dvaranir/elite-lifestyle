@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import SearchBar from "../../components/search/search.component";
 import Calendar from "../../components/calendar/calendar.component";
 import ExerciseCard from "../../components/exercise_card/exercise_card.component";
+import UserExercises from "../../components/user-exercises/user-exercises.component";
 import "./workout.styles.scss";
 
 const checkForDublicates = (id, exercises, userExercises) => {
@@ -15,38 +16,50 @@ const checkForDublicates = (id, exercises, userExercises) => {
   return clicked_exercise[0] === check_for_dublicates[0];
 };
 
-const addRemoveExercise = (
-  e,
-  exercises,
-  userExercises,
-  setUserExercises,
-  date
-) => {
-  if (
-    e.target.classList.value !== "btn__component" &&
-    e.target.parentElement.classList.value !== "btn__component"
-  )
-    return false;
-
+const addRemoveExercise = (e, exercises, userExercises) => {
+  // Select target exercise card id
   const id_exercise_to_add = e.target.closest(".exercise--card").id;
-
+  // Select clicked exercise
   const clicked_exercise = exercises.filter((ex) =>
     ex.id.includes(id_exercise_to_add)
   );
-
+  // Check for exercise dublicate
   if (checkForDublicates(id_exercise_to_add, exercises, userExercises)) {
-    setUserExercises([
+    return [
       ...new Set(
         userExercises.filter((exercise) => exercise !== clicked_exercise[0])
       ),
-    ]);
-  } else {
-    const userExersisesList = [
-      ...new Set([...userExercises, ...clicked_exercise]),
     ];
-
-    setUserExercises(userExersisesList);
+  } else {
+    return [...new Set([...userExercises, ...clicked_exercise])];
   }
+};
+
+const setLocalStorage = (date, userExercises) => {
+  const local_storage = window.localStorage;
+
+  const { year, month, day } = date;
+  let selected_date = `${year}/${month + 1}/${day}`;
+  const userExercisesId = userExercises.map((exercise) => exercise.id);
+
+  local_storage.setItem(selected_date, JSON.stringify(userExercisesId));
+};
+
+const filterExercise = (exercises, filter) => {
+  // eslint-disable-next-line array-callback-return
+  const filteredResult = exercises.filter((el) => {
+    try {
+      return (
+        el.exercise_name.toLowerCase().includes(filter.toLowerCase()) ||
+        el.body_part.toLowerCase().includes(filter.toLowerCase()) ||
+        el.equipment_type.toLowerCase().includes(filter.toLowerCase())
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  });
+
+  return filteredResult;
 };
 
 const WorkoutPage = () => {
@@ -64,23 +77,10 @@ const WorkoutPage = () => {
     try {
       dispatch(fetchExercises());
     } catch (error) {}
+    return () => {
+      setLocalStorage(date, userExercises);
+    };
   }, []);
-
-  const filterExercise = (exercises, filter) => {
-    const filteredResult = exercises.filter((el) => {
-      try {
-        return (
-          el.exercise_name.toLowerCase().includes(filter.toLowerCase()) ||
-          el.body_part.toLowerCase().includes(filter.toLowerCase()) ||
-          el.equipment_type.toLowerCase().includes(filter.toLowerCase())
-        );
-      } catch (error) {
-        console.log(error);
-      }
-    });
-
-    return filteredResult;
-  };
 
   const filteredExercises = filterExercise(exercises, search);
 
@@ -89,31 +89,16 @@ const WorkoutPage = () => {
       <section className="workout--section">
         <section
           className="user--exercises"
-          onClick={(e) =>
-            addRemoveExercise(
-              e,
-              exercises,
-              userExercises,
-              setUserExercises,
-              date
+          onClick={(e) => {
+            if (
+              e.target.classList.value !== "btn__component" &&
+              e.target.parentElement.classList.value !== "btn__component"
             )
-          }
+              return;
+            setUserExercises(addRemoveExercise(e, exercises, userExercises));
+          }}
         >
-          {userExercises[0] ? (
-            userExercises.map((exercise) => {
-              return (
-                <ExerciseCard
-                  key={exercise.id}
-                  exercise={exercise}
-                  btnName="IoIosClose"
-                />
-              );
-            })
-          ) : (
-            <div className="user--exercises__placeholder">
-              Add some exercises
-            </div>
-          )}
+          <UserExercises />
         </section>
 
         <Calendar />
@@ -125,12 +110,14 @@ const WorkoutPage = () => {
               className="exercise--cards"
               onClick={(e) => {
                 try {
-                  addRemoveExercise(
-                    e,
-                    exercises,
-                    userExercises,
-                    setUserExercises,
-                    date
+                  if (
+                    e.target.classList.value !== "btn__component" &&
+                    e.target.parentElement.classList.value !== "btn__component"
+                  )
+                    return;
+
+                  setUserExercises(
+                    addRemoveExercise(e, exercises, userExercises)
                   );
                 } catch (error) {
                   console.log(error);
