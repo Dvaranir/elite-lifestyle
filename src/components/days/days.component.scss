@@ -1,0 +1,59 @@
+@import "../../settings.styles.scss";
+.days--container {
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+  justify-items: center;
+  align-items: center;
+}
+
+.day {
+  position: relative;
+  border: 0.2rem solid white;
+  width: 4rem;
+  height: 4rem;
+  font-size: 2.5rem;
+
+  @include hover-and-click($MainColor, $SecondaryColor, $AdjacentColor);
+}
+.current--day {
+  background-color: $SecondAdjacentColor;
+}
+
+.day div {
+  transition: all 2s linear;
+  transition: left 2s linear;
+}
+
+.not--empty__day:before {
+  content: "";
+  position: absolute;
+  border: 0.5rem solid $AdjacentColor;
+  border-left: 0;
+  border-top: 0;
+  top: 70%;
+  left: 70%;
+  width: 16%;
+  height: 16%;
+}
+
+.semi--full__day:before {
+  content: "";
+  position: absolute;
+  border: 0.5rem solid $AdjacentColor;
+  border-left: 0;
+  border-top: 0;
+  top: 50%;
+  left: 50%;
+  width: 36%;
+  height: 36%;
+}
+
+.full--day:before {
+  content: "";
+  position: absolute;
+  border: 0.5rem solid $AdjacentColor;
+  border-left: 0;
+  border-top: 0;
+  width: 86%;
+  height: 86%;
+}

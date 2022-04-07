@@ -10,39 +10,45 @@ import UserExercises from "../../components/user-exercises/user-exercises.compon
 import "./workout.styles.scss";
 
 const checkForDublicates = (id, exercises, userExercises) => {
+  if (!userExercises) return false;
   const clicked_exercise = exercises.filter((ex) => ex.id.includes(id));
   const check_for_dublicates = userExercises.filter((ex) => ex.id.includes(id));
 
-  return clicked_exercise[0] === check_for_dublicates[0];
+  return (
+    JSON.stringify(clicked_exercise[0]) ===
+    JSON.stringify(check_for_dublicates[0])
+  );
 };
 
-const addRemoveExercise = (e, exercises, userExercises) => {
+const addRemoveExercise = (e, exercises, userExercises, full_date) => {
   // Select target exercise card id
   const id_exercise_to_add = e.target.closest(".exercise--card").id;
   // Select clicked exercise
   const clicked_exercise = exercises.filter((ex) =>
     ex.id.includes(id_exercise_to_add)
   );
+
   // Check for exercise dublicate
   if (checkForDublicates(id_exercise_to_add, exercises, userExercises)) {
-    return [
-      ...new Set(
-        userExercises.filter((exercise) => exercise !== clicked_exercise[0])
-      ),
-    ];
+    return {
+      date: full_date,
+      exercises: [
+        ...userExercises.filter(
+          (exercise) => exercise.id !== clicked_exercise[0].id
+        ),
+      ],
+    };
+  } else if (Array.isArray(userExercises)) {
+    return {
+      date: full_date,
+      exercises: [...new Set([...userExercises, ...clicked_exercise])],
+    };
   } else {
-    return [...new Set([...userExercises, ...clicked_exercise])];
+    return {
+      date: full_date,
+      exercises: [...clicked_exercise],
+    };
   }
-};
-
-const setLocalStorage = (date, userExercises) => {
-  const local_storage = window.localStorage;
-
-  const { year, month, day } = date;
-  let selected_date = `${year}/${month + 1}/${day}`;
-  const userExercisesId = userExercises.map((exercise) => exercise.id);
-
-  local_storage.setItem(selected_date, JSON.stringify(userExercisesId));
 };
 
 const filterExercise = (exercises, filter) => {
@@ -69,17 +75,15 @@ const WorkoutPage = () => {
     dispatch
   );
 
-  const { date, search, exercises, userExercises } = useSelector(
+  const { search, exercises, userExercises, date } = useSelector(
     (state) => state
   );
+  const { full_date } = date;
 
   useEffect(() => {
     try {
       dispatch(fetchExercises());
     } catch (error) {}
-    return () => {
-      setLocalStorage(date, userExercises);
-    };
   }, []);
 
   const filteredExercises = filterExercise(exercises, search);
@@ -95,7 +99,14 @@ const WorkoutPage = () => {
               e.target.parentElement.classList.value !== "btn__component"
             )
               return;
-            setUserExercises(addRemoveExercise(e, exercises, userExercises));
+            setUserExercises(
+              addRemoveExercise(
+                e,
+                exercises,
+                userExercises[full_date],
+                full_date
+              )
+            );
           }}
         >
           <UserExercises />
@@ -117,7 +128,12 @@ const WorkoutPage = () => {
                     return;
 
                   setUserExercises(
-                    addRemoveExercise(e, exercises, userExercises)
+                    addRemoveExercise(
+                      e,
+                      exercises,
+                      userExercises[full_date],
+                      full_date
+                    )
                   );
                 } catch (error) {
                   console.log(error);
@@ -126,17 +142,25 @@ const WorkoutPage = () => {
             >
               {/* Add exersice to user exercises list */}
               {filteredExercises.map((exercise) => {
-                return (
-                  <ExerciseCard
-                    key={exercise.id}
-                    exercise={exercise}
-                    btnName={`${
-                      checkForDublicates(exercise.id, exercises, userExercises)
-                        ? "IoIosClose"
-                        : "IoIosAdd"
-                    }`}
-                  />
-                );
+                try {
+                  return (
+                    <ExerciseCard
+                      key={exercise.id}
+                      exercise={exercise}
+                      btnName={`${
+                        checkForDublicates(
+                          exercise.id,
+                          exercises,
+                          userExercises[full_date]
+                        )
+                          ? "IoIosClose"
+                          : "IoIosAdd"
+                      }`}
+                    />
+                  );
+                } catch (error) {
+                  console.log(error);
+                }
               })}
             </div>
           </section>

@@ -1,0 +1,46 @@
+@import "../../settings.styles.scss";
+
+.calendar--section {
+  display: flex;
+  flex-direction: column;
+  font-size: 2rem;
+  color: $SecondaryColor;
+  justify-items: center;
+  align-items: center;
+
+  .month--year {
+    display: flex;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .date--container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .month--btn {
+    background: none;
+    border: none;
+    color: $SecondaryColor;
+    width: 3rem;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .month--btn__component {
+      border: 0.3rem solid $SecondaryColor;
+      border-radius: 50%;
+      display: flex;
+      width: 100%;
+      height: 100%;
+
+      @include hover-and-click($MainColor, $SecondaryColor, $AdjacentColor);
+    }
+  }
+}

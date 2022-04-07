@@ -6,3 +6,11 @@ export const setDate = (newState) => {
     });
   };
 };
+export const toggleAnimation = (newState) => {
+  return (dispatch) => {
+    dispatch({
+      type: "toggleAnimation",
+      payload: newState,
+    });
+  };
+};

@@ -1,8 +1,9 @@
-const reducer = (state = [], action) => {
+const reducer = (state = {}, action) => {
   switch (action.type) {
     case "setUserExercises":
-      return (state = [...action.payload]);
+      const { date, exercises } = action.payload;
 
+      return (state = { ...state, [date]: exercises });
     default:
       return state;
   }

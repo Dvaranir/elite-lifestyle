@@ -1,4 +1,4 @@
-@import '../../settings.styles.scss';
+@import "../../settings.styles.scss";
 
 .exercise--card {
   color: white;
@@ -48,4 +48,9 @@
   #btn__remove {
     @include hover-and-click($MainColor, $SecondAdjacentColor, $SecondaryColor);
   }
+}
+
+.approaches--container {
+  display: flex;
+  flex-direction: row;
 }

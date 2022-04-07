@@ -2,70 +2,64 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state/index";
-import { useEffect } from "react";
+import "./days.component.scss";
 
-const addPartiallyFilledClass = (id) => {
-  const local_storage = window.localStorage;
+const addDayIndicator = (full_date, user_exercises) => {
+  if (user_exercises[full_date] && user_exercises[full_date] !== "") {
+    const number_of_exercises = user_exercises[full_date].length;
 
-  if (local_storage.getItem(id)) {
-    // console.log(local_storage.getItem(id).length);
+    if (number_of_exercises === 1) return "border--indicator not--empty__day";
+    if (number_of_exercises > 1 && number_of_exercises <= 3)
+      return "border--indicator semi--full__day";
+    if (number_of_exercises >= 4) return "border--indicator full--day";
+    else return "";
   }
 };
 
-const genDaysInMonth = (numberOfDays, year, month, currentDay) => {
+const genDays = (numberOfDays, full_date, user_exercises) => {
   let i = 0;
 
-  let days_buffer = [];
+  let days_buffer = {};
   while (i < numberOfDays) {
     i++;
-    const id = `${year}/${month + 1}/${i}`;
+    let year_month = full_date.substring(0, 8);
+    const id = year_month + i.toString().padStart(2, "0");
 
-    addPartiallyFilledClass(id);
+    days_buffer[id] = addDayIndicator(full_date, user_exercises);
+  }
+
+  console.log(days_buffer);
+  return days_buffer;
+};
+
+const genDaysInMonth = (days, currentDay) => {
+  const days_buffer = [];
+  Object.keys(days).forEach((key) => {
+    let day = key.slice(8, 10);
 
     days_buffer.push(
       <div
-        key={id}
-        id={id}
+        key={key}
+        id={key}
         className={`day text--selection__none ${
-          currentDay === i && "current--day"
-        }`}
+          currentDay === Number(day) && "current--day "
+        }${days[key]}`}
       >
-        {i.toString().padStart(2, "0")}
+        {day}
       </div>
     );
-  }
+  });
+  console.log(days_buffer);
+
   return <>{days_buffer}</>;
 };
 
 const Days = ({ getDateObject }) => {
   const dispatch = useDispatch();
-  const { setDate, setUserExercises } = bindActionCreators(
-    actionCreators,
-    dispatch
-  );
+  const { setDate } = bindActionCreators(actionCreators, dispatch);
 
-  const { date, exercises } = useSelector((state) => state);
-  const { days_in_month, year, month, day } = date;
-
-  useEffect(() => {
-    const local_storage = window.localStorage;
-
-    const selected_date = `${year}/${month + 1}/${day}`;
-
-    if (local_storage.getItem(selected_date)) {
-      const u_exercises = JSON.parse(local_storage.getItem(selected_date));
-      let retrieve_exercises = [];
-      u_exercises.forEach((el) => {
-        retrieve_exercises.push(
-          ...exercises.filter((exercise) => exercise.id === el.id)
-        );
-      });
-
-      setUserExercises(retrieve_exercises);
-    } else {
-      setUserExercises("");
-    }
-  }, [day]);
+  const { date, userExercises } = useSelector((state) => state);
+  const { days_in_month, full_date, day } = date;
 
   return (
     <div
@@ -81,7 +75,7 @@ const Days = ({ getDateObject }) => {
         }
       }}
     >
-      {genDaysInMonth(days_in_month, year, month, day)}
+      {genDaysInMonth(genDays(days_in_month, full_date, userExercises), day)}
     </div>
   );
 };

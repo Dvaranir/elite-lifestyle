@@ -4,10 +4,16 @@ import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state/index";
 import { useEffect } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+
 import Days from "../days/days.component";
+import "./calendar.component.scss";
 
 const getDaysInMonth = (year, month) => {
   return new Date(year, month, 0).getDate();
+};
+
+const addPadstart = (value) => {
+  return value.toString().padStart(2, "0");
 };
 
 function getDateObject(date) {
@@ -20,7 +26,7 @@ function getDateObject(date) {
     day: day,
     month: month,
     year: year,
-    full_date: [year, month, day],
+    full_date: `${year}/${addPadstart(month + 1)}/${addPadstart(day)}`,
     month_name: month_name,
     days_in_month: getDaysInMonth(year, month + 1),
     userExercises: [],
@@ -41,19 +47,18 @@ const nextMonth = (year, month, day) => {
   return changeDate(year, Number(month) + 1, day);
 };
 
-const date_object = getDateObject(new Date());
-
 const Calendar = () => {
   const dispatch = useDispatch();
   const { setDate } = bindActionCreators(actionCreators, dispatch);
 
   const { date } = useSelector((state) => state);
+  let { day, month, year, month_name } = date;
 
   useEffect(() => {
+    const date_object = getDateObject(new Date());
+
     setDate(date_object);
   }, []);
-
-  let { day, month, year, month_name } = date;
 
   return (
     <section className="calendar--section">
