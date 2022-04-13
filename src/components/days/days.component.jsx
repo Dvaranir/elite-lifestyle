@@ -4,35 +4,34 @@ import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state/index";
 import "./days.component.scss";
 
-const addDayIndicator = (full_date, user_exercises) => {
-  if (user_exercises[full_date] && user_exercises[full_date] !== "") {
-    const number_of_exercises = user_exercises[full_date].length;
+const addDayIndicator = (fullDate, userExercises) => {
+  if (userExercises[fullDate] && userExercises[fullDate] !== "") {
+    const exs_count = userExercises[fullDate].length;
+    const tag = " border--indicator ";
 
-    if (number_of_exercises === 1) return "border--indicator not--empty__day";
-    if (number_of_exercises > 1 && number_of_exercises <= 3)
-      return "border--indicator semi--full__day";
-    if (number_of_exercises >= 4) return "border--indicator full--day";
+    if (exs_count === 1) return `${tag} not--empty__day`;
+    if (exs_count > 1 && exs_count <= 3) return `${tag} semi--full__day`;
+    if (exs_count >= 4) return `${tag} full--day`;
     else return "";
-  }
+  } else return "";
 };
 
-const genDays = (numberOfDays, full_date, user_exercises) => {
+const genDays = (numberOfDays, fullDate, userExercises) => {
   let i = 0;
 
   let days_buffer = {};
   while (i < numberOfDays) {
     i++;
-    let year_month = full_date.substring(0, 8);
+    let year_month = fullDate.substring(0, 8);
     const id = year_month + i.toString().padStart(2, "0");
 
-    days_buffer[id] = addDayIndicator(full_date, user_exercises);
+    days_buffer[id] = addDayIndicator(id, userExercises);
   }
 
-  console.log(days_buffer);
   return days_buffer;
 };
 
-const genDaysInMonth = (days, currentDay) => {
+const genMonth = (days, currentDay) => {
   const days_buffer = [];
   Object.keys(days).forEach((key) => {
     let day = key.slice(8, 10);
@@ -49,7 +48,6 @@ const genDaysInMonth = (days, currentDay) => {
       </div>
     );
   });
-  console.log(days_buffer);
 
   return <>{days_buffer}</>;
 };
@@ -75,7 +73,7 @@ const Days = ({ getDateObject }) => {
         }
       }}
     >
-      {genDaysInMonth(genDays(days_in_month, full_date, userExercises), day)}
+      {genMonth(genDays(days_in_month, full_date, userExercises), day)}
     </div>
   );
 };

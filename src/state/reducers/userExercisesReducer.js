@@ -4,6 +4,7 @@ const reducer = (state = {}, action) => {
       const { date, exercises } = action.payload;
 
       return (state = { ...state, [date]: exercises });
+
     default:
       return state;
   }

@@ -14,8 +14,9 @@ const UserExercises = () => {
             <ExerciseCard
               key={exercise.id}
               exercise={exercise}
-              userExerciseCard={true}
               btnName="IoIosClose"
+              userExerciseCard={true}
+              userExercises={userExercises}
             />
           );
         })

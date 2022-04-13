@@ -1,0 +1,45 @@
+@import "../../settings.styles.scss";
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.submit--form__header {
+  display: flex;
+  color: $SecondaryColor;
+  width: 85%;
+  justify-content: space-between;
+  svg {
+    width: 3rem;
+    height: 3rem;
+
+    @include hover-and-click($SecondAdjacentColor, $MainColor, $SecondaryColor);
+  }
+}
+
+.repeats--buttons {
+  width: 85%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: right;
+  gap: 1rem;
+  input {
+    font-family: "Oswald", sans-serif;
+    height: 3rem;
+    width: 30%;
+
+    text-align: center;
+    line-height: 3rem;
+    font-size: 1.7rem;
+    background: $SecondaryColor;
+    border: none;
+    margin-top: 1rem;
+    @include hover-and-click($MainColor, $AdjacentColor, $SecondaryColor);
+  }
+}

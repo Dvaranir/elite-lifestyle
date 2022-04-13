@@ -1,5 +1,8 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
 import { IoIosAdd, IoIosClose } from "react-icons/io";
+
 import "./exercise_card.component.scss";
 
 const iconSwitcher = (iconName) => {
@@ -14,31 +17,45 @@ const iconSwitcher = (iconName) => {
   }
 };
 
-const generateUserExerciseCard = (userExerciseCard) => {
+const generateUserExerciseCard = (
+  userExerciseCard,
+  currentDate,
+  exercise,
+  userExercises
+) => {
   if (!userExerciseCard) return;
 
+  const index_of_exercise = userExercises?.[currentDate].indexOf(exercise);
+  const repeats_in_exercise =
+    userExercises?.[currentDate]?.[index_of_exercise]?.repeats;
   return (
-    <div className="approaches--container">
-      <div className="labels--container">
-        <p className="approach--weight__label">Weight</p>
-        <p className="approach--repeat__label">Repeats</p>
-      </div>
-      <div className="buttons--container">
-        <button className="add--btn">Add</button>
-        <button className="remove--btn">Remove</button>
-      </div>
-      <div className="weight--repeats">
-        <p className="exercise--repeats">12</p>
-        <p className="exercise--weight">15 kg</p>
-      </div>
+    <div className="repeats--container">
+      {Array.isArray(repeats_in_exercise) &&
+        repeats_in_exercise.map(({ id, weight, repeats }) => {
+          return (
+            <div className="repeat" key={id} id={id}>
+              <p className="exercise--weight">
+                <b>{weight}</b> <i>kg</i>
+              </p>
+              <p className="exercise--repeats">
+                <b>{repeats}</b> <i>rp</i>
+              </p>
+            </div>
+          );
+        })}
+
+      <IoIosAdd className="add--repeat__btn" id="add--repeat__btn" />
     </div>
   );
 };
 
 const ExerciseCard = ({ exercise, btnName, userExerciseCard = false }) => {
+  const { userExercises, date } = useSelector((state) => state);
+  const { full_date } = date;
   const { id, images_url_bbc, exercise_name, body_part } = exercise;
+
   return (
-    <div className="exercise--card" key={id} id={id}>
+    <article className="exercise--card" key={id} id={id}>
       <div className="image--container">
         <img
           src={images_url_bbc.replace("{", "").replace("}", "").split(",")[0]}
@@ -46,12 +63,19 @@ const ExerciseCard = ({ exercise, btnName, userExerciseCard = false }) => {
         />
       </div>
       <div className="exercise--description">
-        <p className="exercise--name">{exercise_name}</p>
+        <p className="exercise--name">
+          <strong>{exercise_name}</strong>
+        </p>
         <p className="body--part">{body_part}</p>
-        {generateUserExerciseCard(userExerciseCard)}
+        {generateUserExerciseCard(
+          userExerciseCard,
+          full_date,
+          exercise,
+          userExercises
+        )}
       </div>
       <button className="btn">{iconSwitcher(btnName)}</button>
-    </div>
+    </article>
   );
 };
 

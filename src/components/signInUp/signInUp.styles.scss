@@ -1,4 +1,4 @@
-@import '../../settings.styles.scss';
+@import "../../settings.styles.scss";
 
 .submit-form {
   position: absolute;
@@ -30,7 +30,7 @@
 }
 
 .input {
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
   height: 3rem;
   font-size: 2rem;
   border: none;
@@ -52,7 +52,7 @@ label {
 }
 
 .submit-btn {
-  font-family: 'Oswald', sans-serif;
+  font-family: "Oswald", sans-serif;
   height: 3rem;
   width: 30%;
   cursor: pointer;
@@ -66,10 +66,4 @@ label {
 
 .submit-btn:hover {
   background: $SecondaryColor;
-}
-
-.hide {
-}
-
-.show {
 }

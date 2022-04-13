@@ -1,10 +1,10 @@
-import { combineReducers } from 'redux';
-import dateReducer from './dateReducer';
-import exercisesReducer from './exercisesReducer';
-import menuItemsReducer from './menuItemsReducer';
-import searchReducer from './searchReducer';
-import userExercisesReducer from './userExercisesReducer';
-import loginFormReducer from './loginFormReducer';
+import { combineReducers } from "redux";
+import dateReducer from "./dateReducer";
+import exercisesReducer from "./exercisesReducer";
+import menuItemsReducer from "./menuItemsReducer";
+import searchReducer from "./searchReducer";
+import userExercisesReducer from "./userExercisesReducer";
+import formsReducer from "./formsReducer";
 
 const redusers = combineReducers({
   date: dateReducer,
@@ -12,7 +12,7 @@ const redusers = combineReducers({
   menu: menuItemsReducer,
   search: searchReducer,
   userExercises: userExercisesReducer,
-  loginForm: loginFormReducer,
+  forms: formsReducer,
 });
 
 export default redusers;

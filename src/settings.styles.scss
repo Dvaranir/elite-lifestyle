@@ -2,7 +2,7 @@ $MainColor: #2d3436;
 $SecondaryColor: #eeeeee;
 $AdjacentColor: #74b9ff;
 $SecondAdjacentColor: #ff7675;
-
+$ThirdAdjacentColor: #04d048;
 @mixin hover-and-click($MColor, $SColor, $AColor) {
   &:hover {
     color: $MColor;
