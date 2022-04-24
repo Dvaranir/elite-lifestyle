@@ -1,4 +1,4 @@
-@import './settings.styles.scss';
+@import "./settings.styles.scss";
 
 * {
   margin: 0;
@@ -16,16 +16,16 @@ a {
 }
 
 a:visited {
-  color: $MainColor;
+  all: unset;
 }
 
 .App {
-  width: 99vw;
-  height: 99vh;
+  width: 99.9vw;
+  height: 99.9vh;
   margin: auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 }
 

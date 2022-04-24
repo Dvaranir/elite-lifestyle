@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 
-import Menu_Items from "./data/menu-items";
+import Menu_Items from "./settings.js";
 
 import Header from "./components/header/header.component";
 import Footer from "./components/footer/footer.component";

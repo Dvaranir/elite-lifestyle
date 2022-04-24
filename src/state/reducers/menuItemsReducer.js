@@ -1,8 +1,8 @@
-import Menu_Items from '../../data/menu-items';
+import Menu_Items from "../../settings";
 
 const reducer = (state = Menu_Items, action) => {
   switch (action.type) {
-    case 'setMenuItems':
+    case "setMenuItems":
       return (state = action.payload);
 
     default:

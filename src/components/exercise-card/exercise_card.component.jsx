@@ -21,24 +21,36 @@ const generateUserExerciseCard = (
   userExerciseCard,
   currentDate,
   exercise,
-  userExercises
+  userExercises,
+  { repeatId, show }
 ) => {
   if (!userExerciseCard) return;
 
   const index_of_exercise = userExercises?.[currentDate].indexOf(exercise);
-  const repeats_in_exercise =
-    userExercises?.[currentDate]?.[index_of_exercise]?.repeats;
+  const current_exercise = userExercises?.[currentDate]?.[index_of_exercise];
+  const repeats_in_exercise = current_exercise?.repeats;
+
+  const isRepeatActive = (id, activeRepeatId, formShowing) => {
+    if (activeRepeatId === id && formShowing) return " active--repeat";
+    else return "";
+  };
+
   return (
     <div className="repeats--container">
+      <div className="repeat--units">
+        <i className="weight--units">kg</i>
+        <i className="repeat--units">rp</i>
+      </div>
       {Array.isArray(repeats_in_exercise) &&
         repeats_in_exercise.map(({ id, weight, repeats }) => {
+          const repeatActive = isRepeatActive(id, repeatId, show);
           return (
-            <div className="repeat" key={id} id={id}>
+            <div className={`repeat${repeatActive}`} key={id} id={id}>
               <p className="exercise--weight">
-                <b>{weight}</b> <i>kg</i>
+                <b>{weight}</b>
               </p>
               <p className="exercise--repeats">
-                <b>{repeats}</b> <i>rp</i>
+                <b>{repeats}</b>
               </p>
             </div>
           );
@@ -49,13 +61,19 @@ const generateUserExerciseCard = (
   );
 };
 
-const ExerciseCard = ({ exercise, btnName, userExerciseCard = false }) => {
-  const { userExercises, date } = useSelector((state) => state);
+const ExerciseCard = ({
+  exercise,
+  btnName,
+  userExerciseCard = false,
+  observe,
+}) => {
+  const { userExercises, date, forms } = useSelector((state) => state);
   const { full_date } = date;
   const { id, images_url_bbc, exercise_name, body_part } = exercise;
+  const { repeatsForm } = forms;
 
   return (
-    <article className="exercise--card" key={id} id={id}>
+    <article className="exercise--card" key={id} id={id} ref={observe}>
       <div className="image--container">
         <img
           src={images_url_bbc.replace("{", "").replace("}", "").split(",")[0]}
@@ -71,7 +89,8 @@ const ExerciseCard = ({ exercise, btnName, userExerciseCard = false }) => {
           userExerciseCard,
           full_date,
           exercise,
-          userExercises
+          userExercises,
+          repeatsForm
         )}
       </div>
       <button className="btn">{iconSwitcher(btnName)}</button>

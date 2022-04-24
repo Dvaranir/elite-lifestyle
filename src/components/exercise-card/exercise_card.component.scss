@@ -9,23 +9,25 @@
   .image--container {
     width: 10rem;
     height: 10rem;
+
     background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
 
     img {
-      width: 10rem;
+      width: inherit;
     }
   }
 
   .exercise--description {
-    font-size: 1.5rem;
-    text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
     width: 100%;
+    font-size: 1.5rem;
+    text-align: center;
+    justify-content: space-evenly;
+    margin-left: 1rem;
   }
 }
 
@@ -34,12 +36,11 @@
   border: none;
   display: flex;
   align-items: center;
-  width: 3rem;
+  width: 4rem;
   color: $SecondaryColor;
 
   .btn__component {
     border: 0.2rem solid $SecondaryColor;
-    border-radius: 50%;
     stroke-width: 1rem;
     width: 100%;
     height: auto;
@@ -59,9 +60,16 @@
 
 .repeats--container {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   gap: 0.5rem;
   margin-left: 1rem;
+
+  .repeat--units {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
   i {
     opacity: 0.7;
@@ -72,14 +80,13 @@
     flex-direction: column;
 
     border: 0.2rem solid white;
-    border-radius: 25%;
     padding: 0.3rem;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     justify-content: center;
     align-items: center;
   }
 }
 
 .active--repeat {
-  background-color: $ThirdAdjacentColor;
+  background-color: $AdjacentColor;
 }

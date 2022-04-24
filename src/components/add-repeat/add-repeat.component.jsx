@@ -3,81 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state/index";
 import { IoIosTrash } from "react-icons/io";
+import { getRepeatIndex } from "../helpers";
+import { v4 } from "uuid";
 import "./add-repeat.component.scss";
-
-const cleanFields = (e) => {
-  e.target[0].value = "";
-  e.target[1].value = "";
-};
-
-const generateRepeatsArray = (e, target_exercise, repeatId) => {
-  const new_repeat = {
-    id: repeatId,
-    weight: e.target[0].value,
-    repeats: e.target[1].value,
-  };
-
-  if (target_exercise.repeats) {
-    const old_repeats = target_exercise.repeats;
-    const exist_check = old_repeats?.some((repeat) => repeat?.id === repeatId);
-
-    if (exist_check) {
-      const existing_repeat = old_repeats?.filter(
-        (repeat) => repeat?.id === repeatId
-      );
-      const exist_item_index = old_repeats.indexOf(existing_repeat[0]);
-
-      old_repeats[exist_item_index] = new_repeat;
-
-      return old_repeats;
-    } else {
-      old_repeats.push(new_repeat);
-      cleanFields(e);
-      console.log("New repeat");
-      return old_repeats;
-    }
-  } else {
-    cleanFields(e);
-    return [new_repeat];
-  }
-};
-
-const onSubmit = (e, currentDate, userExercises, exerciseID, repeatID) => {
-  e.preventDefault();
-
-  const target_exercise = {
-    ...userExercises[currentDate].filter(
-      (exercise) => exercise.id === exerciseID
-    )[0],
-  };
-
-  let gen_repeat_id;
-  if (repeatID) {
-    gen_repeat_id = repeatID;
-  } else if (target_exercise?.repeats) {
-    gen_repeat_id =
-      target_exercise.repeats.length + 1 + exerciseID.slice(0, 4) + currentDate;
-  } else {
-    gen_repeat_id = 1 + exerciseID.slice(0, 4) + currentDate;
-  }
-
-  const new_repeat_data = {
-    repeats: generateRepeatsArray(e, target_exercise, gen_repeat_id),
-  };
-
-  const exerciseWithRepeats = Object.assign(target_exercise, new_repeat_data);
-
-  const new_exercises = {
-    date: currentDate,
-    exercises: [
-      ...userExercises[currentDate].filter(
-        (exercise) => exercise.id !== exerciseID
-      ),
-      exerciseWithRepeats,
-    ],
-  };
-  return new_exercises;
-};
 
 const AddRepeat = () => {
   const dispatch = useDispatch();
@@ -89,22 +17,129 @@ const AddRepeat = () => {
   const { forms, date, userExercises } = useSelector((state) => state);
   const { full_date } = date;
 
-  const { show, repeatId, currentExerciseID } = forms.repeatsForm;
+  const { show, repeatId, currentExerciseID, actionType } = forms.repeatsForm;
+
+  const current_exs = userExercises[full_date];
+  const [targetExercise] = current_exs?.filter(
+    (exercise) => exercise.id === currentExerciseID
+  );
+
+  const repeat_length = targetExercise?.repeats?.length;
+  const repeat_number =
+    actionType === "add"
+      ? (repeat_length ? repeat_length : 0) + 1
+      : getRepeatIndex(targetExercise, repeatId) + 1;
+
+  const cleanFields = (e) => {
+    e.target[0].value = "";
+    e.target[1].value = "";
+  };
+
+  const deleteRepeat = (currentExerciseId, currentRepeatId) => {
+    const all_current_ex = [...current_exs];
+
+    const [current_user_ex] = [
+      ...all_current_ex.filter((exercise) => exercise.id === currentExerciseId),
+    ];
+
+    const current_user_repeats = current_user_ex.repeats;
+
+    const new_user_repeats = current_user_repeats?.filter(
+      (repeat) => repeat.id !== currentRepeatId
+    );
+
+    current_user_ex.repeats = new_user_repeats;
+
+    const newState = {
+      ...userExercises,
+      [full_date]: [
+        ...current_exs.filter((ex) => ex.id !== currentExerciseId),
+        current_user_ex,
+      ],
+    };
+    setUserExercises(newState);
+  };
+
+  const generateRepeatsArray = (e, targetExercise, repeatId) => {
+    const new_repeat = {
+      id: repeatId,
+      weight: e.target[0].value,
+      repeats: e.target[1].value,
+    };
+
+    if (targetExercise.repeats) {
+      const old_repeats = targetExercise.repeats;
+      const exist_check = old_repeats?.some(
+        (repeat) => repeat?.id === repeatId
+      );
+
+      if (exist_check) {
+        const new_repeats = old_repeats.map((repeat) =>
+          repeat.id !== new_repeat.id ? repeat : new_repeat
+        );
+
+        return new_repeats;
+      } else {
+        old_repeats.push(new_repeat);
+        cleanFields(e);
+
+        return old_repeats;
+      }
+    } else {
+      cleanFields(e);
+
+      return [new_repeat];
+    }
+  };
+
+  const onSubmit = (e, exerciseID, repeatID) => {
+    e.preventDefault();
+    const target_exercise = {
+      ...current_exs.filter((exercise) => exercise.id === exerciseID),
+    }[0];
+
+    let repeat_id;
+    if (repeatID) {
+      repeat_id = repeatID;
+    } else {
+      repeat_id = v4().slice(0, 8);
+    }
+
+    const new_repeat_data = {
+      repeats: generateRepeatsArray(e, target_exercise, repeat_id),
+    };
+
+    const ex_with_repeats = Object.assign(target_exercise, new_repeat_data);
+    const new_exercises = {
+      date: full_date,
+      exercises: [
+        ...current_exs.map((ex) =>
+          ex.id !== exerciseID ? ex : ex_with_repeats
+        ),
+      ],
+    };
+    setUserExercises(new_exercises);
+  };
 
   return show ? (
     <form
       className="submit-form"
       id="submit-form"
       action="submit"
-      onSubmit={(e) =>
-        setUserExercises(
-          onSubmit(e, full_date, userExercises, currentExerciseID, repeatId)
-        )
-      }
+      onSubmit={(e) => {
+        onSubmit(e, currentExerciseID, repeatId);
+        toggleRepeatsForm();
+      }}
     >
-      <div className="submit--form__header">
-        <p className="form--label">Repeat №{1}</p>{" "}
-        <IoIosTrash className="delete--repeat" />
+      <div className="submit--form__header text--selection__none">
+        <p className="form--label">Repeat №{repeat_number}</p>
+        <IoIosTrash
+          className="delete--repeat"
+          onClick={() => {
+            deleteRepeat(currentExerciseID, repeatId);
+            toggleRepeatsForm();
+          }}
+        />
       </div>
       <input
         type="number"

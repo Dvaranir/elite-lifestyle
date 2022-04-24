@@ -1,11 +1,11 @@
-import React from 'react';
-import './signInUp.styles.scss';
+import React from "react";
+import "./sign_in_up.styles.scss";
 
-const SignInUp = ({ mode = 'login', show = false }) => {
+const SignInUp = ({ mode = "login", show = false }) => {
   return show ? (
     <form className="submit-form" id="submit-form" action="submit">
       <p className="form--label">
-        {mode === 'login' ? 'Sign In' : 'Sign Up to'} Elite Lifestyle
+        {mode === "login" ? "Sign In" : "Sign Up to"} Elite Lifestyle
       </p>
       <input
         type="email"
@@ -24,7 +24,7 @@ const SignInUp = ({ mode = 'login', show = false }) => {
       <input
         type="submit"
         className="submit-btn"
-        value={mode === 'signIn' ? 'Sign In' : 'Sign Up'}
+        value={mode === "signIn" ? "Sign In" : "Sign Up"}
       />
     </form>
   ) : (

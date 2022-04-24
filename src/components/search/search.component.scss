@@ -1,5 +1,6 @@
 .search--box {
-  position: fixed;
-  display: flex;
-  width: 35rem;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  padding-right: 0.2rem;
 }

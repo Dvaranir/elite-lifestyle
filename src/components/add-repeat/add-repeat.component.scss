@@ -43,3 +43,6 @@ input[type="number"] {
     @include hover-and-click($MainColor, $AdjacentColor, $SecondaryColor);
   }
 }
+.active--repeat {
+  background-color: rgb(0, 204, 0);
+}

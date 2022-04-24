@@ -1,14 +1,41 @@
-@import '../../settings.styles.scss';
+@import "../../settings.styles.scss";
 
 .footer {
   width: 100%;
   display: flex;
-  justify-content: space-between;
-
+  justify-content: center;
+  align-items: center;
+  background-color: $MainColorTone4;
+  padding: 0.5rem;
   align-items: center;
   justify-items: center;
   font-size: 2rem;
   color: $SecondaryColor;
+}
+
+.author--ref {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 1.5rem;
+
+  p,
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $SecondaryColor;
+  }
+
+  a:visited {
+    all: unset;
+  }
+
+  img {
+    width: 1.5rem;
+    color: $SecondaryColor;
+  }
 }
 
 @media only screen and (max-width: 972px) {

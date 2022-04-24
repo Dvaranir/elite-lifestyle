@@ -16,9 +16,14 @@ const reducer = (
       return (state = {
         loginForm: { show: false, mode: "signIn" },
         repeatsForm: {
-          show: !state.repeatsForm.show,
+          show: action.payload?.show
+            ? action.payload?.show
+            : !state.repeatsForm.show,
           repeatId: action.payload?.repeatId,
           currentExerciseID: action.payload?.id,
+          actionType: action.payload?.actionType,
+          repeats: action.payload?.repeats,
+          weight: action.payload?.weight,
         },
       });
 

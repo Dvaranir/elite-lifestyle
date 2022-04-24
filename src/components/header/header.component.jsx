@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state/index";
 
-import SignInUp from "../signInUp/signInUp.component";
+import SignInUp from "../sign-in-up/sign_in_up.component";
 
 import { Link } from "react-router-dom";
 

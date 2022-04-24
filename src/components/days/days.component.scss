@@ -16,7 +16,7 @@
   @include hover-and-click($MainColor, $SecondaryColor, $AdjacentColor);
 }
 .current--day {
-  background-color: $SecondAdjacentColor;
+  background-color: $AdjacentColor;
 }
 
 .day div {

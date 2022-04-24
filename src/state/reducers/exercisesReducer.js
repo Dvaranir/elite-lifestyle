@@ -1,8 +1,8 @@
 const reducer = (state = [], action) => {
   switch (action.type) {
-    case 'setExercises':
+    case "setExercises":
       return (state = action.payload);
-    case 'fetchExercises':
+    case "fetchExercises":
       return action.payload;
     default:
       return state;
