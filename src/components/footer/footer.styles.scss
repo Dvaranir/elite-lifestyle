@@ -40,7 +40,9 @@
 
 @media only screen and (max-width: 972px) {
   .footer {
-    width: 90%;
-    font-size: 1.5rem;
+    width: 100%;
+    .author--ref {
+      font-size: 2.5rem;
+    }
   }
 }

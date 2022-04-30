@@ -13,7 +13,7 @@ import "./workout.styles.scss";
 
 const WorkoutPage = () => {
   const dispatch = useDispatch();
-  const { fetchExercises, hideRepeatsForm } = bindActionCreators(
+  const { hideRepeatsForm } = bindActionCreators(
     actionCreators,
     dispatch
   );
@@ -24,7 +24,6 @@ const WorkoutPage = () => {
   useEffect(() => {
     try {
       hideRepeatsForm();
-      dispatch(fetchExercises());
     } catch (error) {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

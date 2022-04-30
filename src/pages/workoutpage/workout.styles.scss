@@ -79,3 +79,52 @@
     margin-top: 0;
   }
 }
+
+@media only screen and (max-width: 825px) {
+  .workout--section {
+    grid-template-columns: 1fr 0.5fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+  }
+  .calendar--section {
+    grid-column-start: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .month--btn {
+      width: 4rem;
+    }
+    .month--year {
+      font-size: 3rem;
+    }
+    .day {
+      font-size: 3rem;
+    }
+  }
+  .user--exercises {
+    grid-row-start: 2;
+    grid-column-start: span 2;
+    .exercise--description {
+      font-size: 3.5rem;
+    }
+    .image--container {
+      width: 20rem;
+      height: 20rem;
+    }
+    .add--repeat__btn {
+      width: 7rem;
+      height: 7rem;
+    }
+  }
+  .btn__component {
+    width: 100rem;
+    height: 100rem;
+  }
+  .exercise--search__section {
+    grid-column-start: 1;
+    grid-row-start: 1;
+    .exercise--description {
+      font-size: 3rem;
+    }
+  }
+}

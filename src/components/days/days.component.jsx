@@ -4,6 +4,8 @@ import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state/index";
 import "./days.component.scss";
 
+// Adds indicator if day have some user exercises
+// indicator depends on number or exercises
 const addDayIndicator = (fullDate, userExercises) => {
   if (userExercises[fullDate] && userExercises[fullDate] !== "") {
     const exs_count = userExercises[fullDate].length;
@@ -52,7 +54,7 @@ const genMonth = (days, currentDay) => {
   return <>{days_buffer}</>;
 };
 
-const Days = ({ getDateObject }) => {
+const Days = ({ genDateObject }) => {
   const dispatch = useDispatch();
   const { setDate } = bindActionCreators(actionCreators, dispatch);
 
@@ -66,7 +68,7 @@ const Days = ({ getDateObject }) => {
         try {
           const [year, month, day] = e.target.id.split("/");
           const propDate = new Date(year, month - 1, day);
-          const date_object = getDateObject(propDate);
+          const date_object = genDateObject(propDate);
           date_object.day && setDate(date_object);
         } catch (error) {
           console.log(error);

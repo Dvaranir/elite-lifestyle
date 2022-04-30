@@ -1,0 +1,21 @@
+.rotate {
+  animation: rotate 3s linear infinite;
+}
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading--container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  svg {
+    color: white;
+    width: 70%;
+    height: 70%;
+  }
+}

@@ -1,3 +1,5 @@
+// Functions that are using by several components
+
 export function getRepeatIndex(targetExercise, targetRepeatId) {
   const old_repeats = targetExercise?.repeats;
   const existing_repeat = old_repeats?.filter(

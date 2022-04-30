@@ -1,0 +1,11 @@
+@import "../../settings.styles.scss";
+
+.not--found {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  font-size: 4.5rem;
+  color: $SecondaryColor;
+}

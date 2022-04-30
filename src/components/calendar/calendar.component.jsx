@@ -11,12 +11,13 @@ import "./calendar.component.scss";
 const getDaysInMonth = (year, month) => {
   return new Date(year, month, 0).getDate();
 };
-
+// Adding zero to start of the day number
 const addPadstart = (value) => {
   return value.toString().padStart(2, "0");
 };
 
-function getDateObject(date) {
+// Generates date object for date state
+function genDateObject(date) {
   let day = date.getDate();
   let month = date.getMonth();
   let year = date.getFullYear();
@@ -36,7 +37,7 @@ function getDateObject(date) {
 }
 
 const changeDate = (year, month, day) => {
-  return getDateObject(new Date(year, month, day));
+  return genDateObject(new Date(year, month, day));
 };
 
 const prevMonth = (year, month, day) => {
@@ -55,40 +56,42 @@ const Calendar = () => {
   let { day, month, year, month_name } = date;
 
   useEffect(() => {
-    const date_object = getDateObject(new Date());
+    const date_object = genDateObject(new Date());
 
     setDate(date_object);
   }, []);
 
   return (
     <section className="calendar--section">
-      <div className="month--year">
-        <button
-          onClick={() => {
-            setDate({
-              ...prevMonth(year, month, day),
-            });
-          }}
-          className="month--btn prev--month__btn"
-        >
-          <IoIosArrowBack className="month--btn__component" />
-        </button>
-        <div className="date--container">
-          <div className="month">{month_name}</div>
-          <div className="year">{year}</div>
+      <div className="days--controls">
+        <div className="month--year">
+          <button
+            onClick={() => {
+              setDate({
+                ...prevMonth(year, month, day),
+              });
+            }}
+            className="month--btn prev--month__btn"
+          >
+            <IoIosArrowBack className="month--btn__component" />
+          </button>
+          <div className="date--container">
+            <div className="month">{month_name}</div>
+            <div className="year">{year}</div>
+          </div>
+          <button
+            onClick={() => {
+              setDate({
+                ...nextMonth(year, month, day),
+              });
+            }}
+            className="month--btn next--month__btn"
+          >
+            <IoIosArrowForward className="month--btn__component" />
+          </button>
         </div>
-        <button
-          onClick={() => {
-            setDate({
-              ...nextMonth(year, month, day),
-            });
-          }}
-          className="month--btn next--month__btn"
-        >
-          <IoIosArrowForward className="month--btn__component" />
-        </button>
+        <Days genDateObject={genDateObject} />
       </div>
-      <Days getDateObject={getDateObject} />
     </section>
   );
 };

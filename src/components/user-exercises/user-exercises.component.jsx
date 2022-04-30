@@ -11,6 +11,7 @@ import {
   addRemoveExercise,
 } from "../../components/helpers";
 
+// Adds repeats to user exercises and renders them
 const UserExercises = () => {
   const dispatch = useDispatch();
   const { setUserExercises, toggleRepeatsForm } = bindActionCreators(

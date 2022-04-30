@@ -16,7 +16,8 @@ const iconSwitcher = (iconName) => {
       <></>;
   }
 };
-
+// Generates addition to exercise card if it's user exercises
+// It adds repeats to exercise card
 const generateUserExerciseCard = (
   userExerciseCard,
   currentDate,
@@ -61,6 +62,7 @@ const generateUserExerciseCard = (
   );
 };
 
+// Exercise card for user and general search components
 const ExerciseCard = ({
   exercise,
   btnName,

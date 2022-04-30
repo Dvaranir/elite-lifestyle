@@ -7,6 +7,7 @@ import { getRepeatIndex } from "../helpers";
 import { v4 } from "uuid";
 import "./add-repeat.component.scss";
 
+// Form which appear when 'add repeat' btn pushed
 const AddRepeat = () => {
   const dispatch = useDispatch();
   const { toggleRepeatsForm, setUserExercises } = bindActionCreators(
@@ -20,9 +21,9 @@ const AddRepeat = () => {
   const { show, repeatId, currentExerciseID, actionType } = forms.repeatsForm;
 
   const current_exs = userExercises[full_date];
-  const [targetExercise] = current_exs?.filter(
+  const targetExercise = current_exs?.filter(
     (exercise) => exercise.id === currentExerciseID
-  );
+  )[0];
 
   const repeat_length = targetExercise?.repeats?.length;
   const repeat_number =
@@ -59,7 +60,7 @@ const AddRepeat = () => {
     };
     setUserExercises(newState);
   };
-
+  // Generating repeats Array, which will be added to userExercises state
   const generateRepeatsArray = (e, targetExercise, repeatId) => {
     const new_repeat = {
       id: repeatId,

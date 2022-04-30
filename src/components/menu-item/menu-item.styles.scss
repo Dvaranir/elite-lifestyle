@@ -1,4 +1,4 @@
-@import '../../settings.styles.scss';
+@import "../../settings.styles.scss";
 
 .menu--item {
   height: 100%;
@@ -48,7 +48,7 @@
   }
   @media only screen and (max-width: 972px) {
     .background--image__container {
-      max-height: 28vh;
+      max-height: 42vh;
       max-width: 95%;
       border-radius: 2rem;
     }

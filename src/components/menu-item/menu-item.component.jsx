@@ -1,7 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './menu-item.styles.scss';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./menu-item.styles.scss";
 
+// Menu item that renders on homepage
 const MenuItem = ({ id, title, imageUrl, url }) => (
   <Link to={`/${url}`}>
     <div className="menu--item" id={id}>

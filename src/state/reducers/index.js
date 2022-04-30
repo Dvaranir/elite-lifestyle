@@ -5,6 +5,7 @@ import menuItemsReducer from "./menuItemsReducer";
 import searchReducer from "./searchReducer";
 import userExercisesReducer from "./userExercisesReducer";
 import formsReducer from "./formsReducer";
+import exercisesStepReducer from "./exercisesStepReducer";
 
 const redusers = combineReducers({
   date: dateReducer,
@@ -13,6 +14,7 @@ const redusers = combineReducers({
   search: searchReducer,
   userExercises: userExercisesReducer,
   forms: formsReducer,
+  exercisesStep: exercisesStepReducer,
 });
 
 export default redusers;

@@ -9,19 +9,16 @@
 .day {
   position: relative;
   border: 0.2rem solid white;
-  width: 4rem;
-  height: 4rem;
+  width: 100%;
+  height: 100%;
+  padding: 0.7rem;
   font-size: 2.5rem;
 
   @include hover-and-click($MainColor, $SecondaryColor, $AdjacentColor);
 }
 .current--day {
   background-color: $AdjacentColor;
-}
-
-.day div {
-  transition: all 2s linear;
-  transition: left 2s linear;
+  color: $MainColor;
 }
 
 .not--empty__day:before {
