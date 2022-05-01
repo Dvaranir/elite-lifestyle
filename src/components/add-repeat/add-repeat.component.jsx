@@ -142,18 +142,20 @@ const AddRepeat = () => {
           }}
         />
       </div>
-      <input
-        type="number"
-        className="input"
-        placeholder="Weight"
-        id="weight--field"
-      />
-      <input
-        type="number"
-        className="input"
-        placeholder="Repeats"
-        id="repeats--field"
-      />
+      <div className="input--fields">
+        <input
+          type="number"
+          className="input"
+          placeholder="Weight"
+          id="weight--field"
+        />
+        <input
+          type="number"
+          className="input"
+          placeholder="Repeats"
+          id="repeats--field"
+        />
+      </div>
       <div className="repeats--buttons">
         <input type="submit" className="save-btn" value="Save " />
         <input
