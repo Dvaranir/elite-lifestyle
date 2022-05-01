@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/elite-lifestyle/static/css/main.82c4696b.chunk.css",
+    "main.js": "/elite-lifestyle/static/js/main.6b0c10cb.chunk.js",
+    "main.js.map": "/elite-lifestyle/static/js/main.6b0c10cb.chunk.js.map",
+    "runtime-main.js": "/elite-lifestyle/static/js/runtime-main.8575f550.js",
+    "runtime-main.js.map": "/elite-lifestyle/static/js/runtime-main.8575f550.js.map",
+    "static/js/2.47c29e4a.chunk.js": "/elite-lifestyle/static/js/2.47c29e4a.chunk.js",
+    "static/js/2.47c29e4a.chunk.js.map": "/elite-lifestyle/static/js/2.47c29e4a.chunk.js.map",
+    "index.html": "/elite-lifestyle/index.html",
+    "static/css/main.82c4696b.chunk.css.map": "/elite-lifestyle/static/css/main.82c4696b.chunk.css.map",
+    "static/js/2.47c29e4a.chunk.js.LICENSE.txt": "/elite-lifestyle/static/js/2.47c29e4a.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8575f550.js",
+    "static/js/2.47c29e4a.chunk.js",
+    "static/css/main.82c4696b.chunk.css",
+    "static/js/main.6b0c10cb.chunk.js"
+  ]
+}
