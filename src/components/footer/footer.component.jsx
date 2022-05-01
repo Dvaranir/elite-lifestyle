@@ -1,5 +1,7 @@
 import React from "react";
 
+import gitgub_logo from "../../img/github.webp";
+
 import "./footer.styles.scss";
 
 const Footer = () => (
@@ -11,7 +13,7 @@ const Footer = () => (
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img src="img/github.webp" alt="GitHub Logo" />
+        <img src={gitgub_logo} alt="GitHub Logo" />
         &nbsp;GitHub
       </a>
     </div>

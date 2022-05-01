@@ -1,3 +1,6 @@
+import food from "./img/food.webp";
+import workout from "./img/workout.webp";
+
 const Menu_Items = [
   //   {
   //     id: "1",
@@ -10,13 +13,13 @@ const Menu_Items = [
   {
     id: "3",
     title: "Build Yourself",
-    imageUrl: "../img/workout.webp",
+    imageUrl: workout,
     url: "workout",
   },
   {
     id: "4",
     title: "Calculate Food",
-    imageUrl: "../img/food.webp",
+    imageUrl: food,
     url: "food",
   },
 ];
